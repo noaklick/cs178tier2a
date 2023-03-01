@@ -1,30 +1,23 @@
-<!-- practice w/ svelte + bootstrap -->
-
-<script>
-    import Slots from '$lib/demos/Slots.svelte';
-    import Timer from '$lib/demos/Timer.svelte';
-    import Storage from '$lib/demos/Storage.svelte';
-</script>
-
 <style>
-    h1 {
-        font-weight: bold;
+    .content {
+        margin: 0 auto;
     }
 </style>
 
-<h1>DEMO</h1>
+<script>
+    import Slot from '$lib/components/Slot.svelte';
 
-<!-- 3 demos: 2 in the top half, 1 in the bottom half -->
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <Slots />
-        </div>
-        <div class="col">
-            <Timer />
-        </div>
-    </div>
-    <div class="row">
-        <Storage />
-    </div>
+    let locs = Array('library', 'room', 'hallway');
+
+    function handleSubmit(event) {
+        console.log(event.target);
+    }
+</script>
+
+<div class="content">
+    <form on:submit|preventDefault={handleSubmit}>
+        <Slot t1={"00:00"} t2={"01:00"} locations={locs} />
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>

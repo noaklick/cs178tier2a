@@ -3,6 +3,8 @@
 <script>
     import Slot from '$lib/components/Slot.svelte';
 
+    export let locations;
+
     const MAX_N_SLOTS = 4;
 
     const N_HOURS = 24
@@ -33,9 +35,9 @@
 </script>
 
 <div class="container" justify-content-center>
-    <div class="vstack">
+    <div class="vstack gap-3">
     {#each slotTimes as times}
-        <Slot t1={times.t1} t2={times.t2} />
+        <Slot t1={times.t1} t2={times.t2} locations={locations}/>
     {/each}
     </div>
 </div>

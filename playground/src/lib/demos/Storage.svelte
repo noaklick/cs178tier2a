@@ -4,7 +4,7 @@
 </script>
 
 <!-- form action 'save' exists in src/routes/+page.server.js -->
-<form method="POST" action="?/save">
+<form method="POST" action="?/demos/save">
     <div class="mb-3">
         <label for="textinput" class="form-label">Write some stuff</label>
         <div class="hstack gap-3">
