@@ -1,0 +1,29 @@
+{
+    "source" : {
+        "title" : "ES 100 final presentation schedule",
+        "url" : "https://docs.google.com/spreadsheets/d/1nOCHGfy1_33A7xT7GOpT1a4IIQZHavxL3IAG-G_VkfQ/edit#gid=930816059"
+    },
+    "slots" : [
+        {
+            "t1" : "09:00",
+            "t2" : "09:45"
+        },
+        {
+            "t1" : "09:45",
+            "t2" : "10:30"
+        },
+        {
+            "t1" : "13:30",
+            "t2" : "14:15"
+        },
+        {
+            "t1" : "16:15",
+            "t2" : "17:00"
+        }
+    ],
+    "locations" : [
+        "SEC 5.4013",
+        "SEC 3.314",
+        "SEC 2.413"
+    ]
+}
