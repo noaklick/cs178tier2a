@@ -15,22 +15,24 @@
     }
 </script>
 
-<div class="card" style={ style }>
+<div class="card w-50" style={ style }>
     <!-- start/end time -->
     <div class="card-body">
         <h1>{ t1 } -- { t2 }</h1>
-    </div>
 
-    <!-- list of available locations (if applicable) -->
-    {#if use_locations}
-    <div class="hstack gap-3">
-        {#each locations as loc, i}
-        {@const loc_id = "loc" + i}
-        <div class="form-check">
-            <input type="checkbox" bind:checked={selected[i]} id={loc_id} class="form-check-input" />
-            <label for={loc_id} class="form-check-label">{loc}</label>
+        <!-- list of available locations (if applicable) -->
+        {#if use_location}
+        <!-- <div class="hstack gap-3"> -->
+        <div class="form-check form-check-inline">
+
+            {#each locations as loc, i}
+            {@const loc_id = loc + i}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id={loc_id} />
+                <label for={loc_id} class="form-check-label">{loc}</label>
+            </div>
+            {/each}
         </div>
-        {/each}
+        {/if}
     </div>
-    {/if}
 </div>
