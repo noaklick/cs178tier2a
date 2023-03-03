@@ -3,6 +3,13 @@
 
     import Slot from '$lib/components/Slot.svelte';
     import data from '$lib/default.json';
+    import TimezonePicker from 'svelte-timezone-picker';
+
+    let timezone = 'America/New_York';
+
+    function update(ev) {
+        console.log(ev.detail.timezone);
+    }
 
     function handleSubmit(event) {
         console.log(event.target);
@@ -17,6 +24,8 @@
 </style>
 
 <div class="content">
+    <TimezonePicker {timezone} on:update="{update}" />
+
     <form on:submit|preventDefault={handleSubmit}>
         <div class="vstack gap-2">
         {#each data.slots as s}

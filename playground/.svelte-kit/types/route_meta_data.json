@@ -1,7 +1,5 @@
 {
-	"/": [
-		"src/routes/+page.server.js"
-	],
+	"/": [],
 	"/create": [
 		"src/routes/create/+page.server.js"
 	]
