@@ -23,9 +23,31 @@
     }
 </style>
 
-<div class="content">
-    <TimezonePicker {timezone} on:update="{update}" />
+<header>
+    <div class="p-5 text-center bg-info text-white">
+        <h1 class="mb-3">Which meeting could you go to?</h1>
+        <h4 class="mb-3">Select all time+location combos that work for you!</h4>
+    </div>
+        
+</header>
 
+<div class="content">
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <TimezonePicker {timezone} on:update="{update}" />
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" id="name" placeholder="Name">
+            </div>
+            <div class="col"></div>            
+                <div class="col"></div>
+
+        </div>
+    </div>
+    
+    <br>
     <form on:submit|preventDefault={handleSubmit}>
         <div class="vstack gap-2">
         {#each data.slots as s}
@@ -38,4 +60,11 @@
         <br />
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <br/>
 </div>
+
+<footer class="text-center text-lg-start bg-light text-muted">
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+       A project for CS 178 by Noa Kligfeld and Ricky Williams.
+    </div>
+</footer>
