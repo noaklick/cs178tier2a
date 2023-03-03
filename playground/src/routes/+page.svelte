@@ -34,6 +34,21 @@
 <div class="content">
 
     <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-lg-auto">
+
+                <TimezonePicker {timezone} on:update="{update}" />
+            </div>
+            <div class="col col-lg-2"></div>
+            <!-- <div class="col-lg-auto"> -->
+            <div class="col col-lg-4">
+
+                <input type="text" class="form-control" id="name" placeholder="Name">
+            </div>
+        </div>
+    </div>
+    
+    <!-- <div class="container">
         <div class="row">
             <div class="col">
                 <TimezonePicker {timezone} on:update="{update}" />
@@ -45,7 +60,7 @@
                 <div class="col"></div>
 
         </div>
-    </div>
+    </div> -->
     
     <br>
     <form on:submit|preventDefault={handleSubmit}>
