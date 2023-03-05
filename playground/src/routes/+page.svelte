@@ -57,8 +57,6 @@
 
                 <input type="text" class="form-control" id="name" placeholder="Name">
             </div>
-        </div>
-    </div>
     
     <!-- <div class="container">
         <div class="row">
@@ -70,9 +68,9 @@
             </div>
             <div class="col"></div>            
                 <div class="col"></div>
-
+        -->
         </div>
-    </div> -->
+    </div>
     
     <br>
     <form on:submit|preventDefault={handleSubmit}>
