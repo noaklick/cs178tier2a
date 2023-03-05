@@ -15,12 +15,15 @@
     let end = new Date();
 
     export let locations = [{id: 1, name: "the gym"}, {id: 2, name: "house"}]
-    export let timeblocks = [{id: 1, start: new Date("October 13, 2014 11:00:00"), end: new Date ("October 13, 2014 12:00:00")}]
+    export let timeblocks = [{id: 1, start: new Date("March 12, 2023 11:00:00"), end: new Date ("March 12, 2023 12:00:00")}]
     let newLocationName = ''
     // #reactive: these variables will update whenever the todos array changes
     // #statevariable: keeps track of the number of total todos
     $: totalLocations = locations.length
     $: totalTimeblocks = timeblocks.length
+
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
 
     /**
      * @param {{ id: any; }} location
@@ -79,88 +82,110 @@
     
 </script>
   
-
-
-<div class="todoapp stack-large">
-    <!-- Locations -->
-    <div> 
-        <form on:submit|preventDefault={addLocation}>
-            <h2 class="label-wrapper">
-                <label for="todo-0" class="label__lg"> Where are you available to meet? </label>
-            </h2>
-            <!-- #properties we bind the the value of the variable to the value of the input -->
-            <!-- noa note: this is super super cool. never seen a feature like this before -->
-            <!-- #text-exp: dynamically updating the value -->
-            <input bind:value={newLocationName} type="text" id="todo-0" autocomplete="off" class="input input__lg" />
-            <!-- #button button to add a new todo -->
-            <button type="submit" class="btn btn__primary btn__lg">
-                Add
-            </button>
-        </form>
-  
-        <!-- Locations list -->
-        <ul role="list" class="todo-list stack-large" aria-labelledby="list-heading">
-        {#each locations as location (location.id)}
-            <li class="todo">
-                <div class="stack-small">
-                    <div class="c-cb">
-                        <!-- #reactive the curly braces let us use JavaScript in the HTML -->
-                        <!-- #properties accessing the id of the todo -->
-
-                        <!-- #text-exp dynamically adding the name of the todo -->
-                        <label for="location-{location.id}" class="todo-label"> {location.name} </label>
-                    </div>
-                    <button type="button" class="btn btn__danger"
-                        on:click={() => removeLocation(location)}>
-                        Delete <span class="visually-hidden">{location.name}</span>
-                    </button>
-                </div>
-            </li>
-        {:else}
-            <li>No locations added yet!</li>
-        {/each}
-        </ul>
-
-    
+<header>
+    <div class="p-5 text-center bg-info text-white">
+        <h1 class="mb-3">Create a meeting!</h1>
     </div>
-    <hr />
+        
+</header>
 
-    <!-- Timeblocks -->
+<div class="content">
+    <br>
     <div class="container">
-        <!-- Add a Timeblock -->
-        <form on:submit|preventDefault={addTimeblock}>
-            <h2 class="label-wrapper">
-                <label for="todo-0" class="label__lg"> When are you available to meet? </label>
-            </h2>
-            <SveltyPicker inputClasses="form-control" format="yyyy-mm-dd hh:ii" placeholder='Select a start date and time' autoclose></SveltyPicker>   
-            <SveltyPicker inputClasses="form-control" format="yyyy-mm-dd hh:ii" placeholder='Select an end date and time' autoclose></SveltyPicker>  
-            <button type="submit" class="btn btn__primary btn__lg">
-                Add
-            </button>
-        </form>
-
-         <!-- Timeblocks list -->
-        <ul role="list" class="todo-list stack-large" aria-labelledby="list-heading">
-            {#each timeblocks as timeblock (timeblock.id)}
-                <li class="todo">
-                    <div class="stack-small">
-                        <div class="c-cb">
-                            <!-- #reactive the curly braces let us use JavaScript in the HTML -->
-                            <!-- #properties accessing the id of the todo -->
+        <!-- Locations -->
+        <div> 
+            <form on:submit|preventDefault={addLocation}>
+                <h3 class="label-wrapper">
+                    <label for="todo-0" class="label__lg"> Where are you available to meet? </label>
+                </h3>
+                <h5 class="label-wrapper">
+                    <label for="todo-0" class="label__lg"> Add all locations in which you're available.  </label>
+                </h5>
+                <!-- #properties we bind the the value of the variable to the value of the input -->
+                <!-- noa note: this is super super cool. never seen a feature like this before -->
+                <!-- #text-exp: dynamically updating the value -->
+                <input bind:value={newLocationName} type="text" id="todo-0" autocomplete="off" class="input input__lg" placeholder="Location"/>
+                <!-- #button button to add a new todo -->
+                <button type="submit" class="btn btn-primary">
+                    Add
+                </button>
+            </form>
     
-                            <!-- #text-exp dynamically adding the name of the todo -->
-                            <label for="timeblock-{timeblock.id}" class="todo-label"> {timeblock.start} {timeblock.end}</label>
+            <!-- Locations list -->
+
+                <div class="container">
+                {#each locations as location (location.id)}
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="location-{location.id}" class="todo-label"> {location.name} </label>
                         </div>
-                        <button type="button" class="btn btn__danger"
-                            on:click={() => removeTimeblock(timeblock)}>
+                    <div class="col">
+                        <button type="button" class="btn btn-danger btn-sm" on:click={() => removeLocation(location)}>
                             Delete
                         </button>
                     </div>
-                </li>
-            {:else}
-                <li>No time blocks added yet!</li>
-            {/each}
-        </ul>
+                </div>
+                {:else}
+                    <li>No locations added yet!</li>
+                {/each}
+            </div>
+        </div>
+        <hr />
+
+        <!-- Timeblocks -->
+        <div class="container">
+            <!-- Add a Timeblock -->
+            <form on:submit|preventDefault={addTimeblock}>
+                <h3 class="label-wrapper">
+                    <label for="todo-0" class="label__lg"> When are you available to meet? </label>
+                </h3>
+                <h5 class="label-wrapper">
+                    <label for="todo-0" class="label__lg"> Add all time blocks in which you're available.  </label>
+                </h5>
+                <div class="container">
+                    <div class="row justify-content-md-center">
+                        <div class="col col-lg-4">
+                            <SveltyPicker inputClasses="form-control" format="yyyy-mm-dd hh:ii" placeholder='Select a start date and time' autoclose></SveltyPicker>   
+                        </div>
+                        <!-- <div class="col-lg-auto"> -->
+                        <div class="col col-lg-4">
+                            <SveltyPicker inputClasses="form-control" format="yyyy-mm-dd hh:ii" placeholder='Select an end date and time' autoclose></SveltyPicker>  
+                        </div>
+                        <div class="col col-lg-4">
+                            <button type="submit" class="btn btn-primary">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </form>
+            <br>
+
+            <!-- Timeblocks list -->
+            <ul role="list" class="todo-list stack-large" aria-labelledby="list-heading">
+                {#each timeblocks as timeblock (timeblock.id)}
+                    <li class="todo">
+                        <div class="stack-small">
+                            <div class="c-cb">
+                                <!-- #reactive the curly braces let us use JavaScript in the HTML -->
+                                <!-- #properties accessing the id of the todo -->
+        
+                                <!-- #text-exp dynamically adding the name of the todo -->
+                                <label for="timeblock-{timeblock.id}" class="todo-label"> <b>Start: </b> {timeblock.start.toLocaleString(options)} <b>End: </b>{timeblock.end.toLocaleString(options)}</label>
+                                <button type="button" class="btn btn-danger btn-sm" on:click={() => removeTimeblock(timeblock)}>
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                {:else}
+                    <li>No time blocks added yet!</li>
+                {/each}
+            </ul>
+        </div>
     </div>
 </div>
   
