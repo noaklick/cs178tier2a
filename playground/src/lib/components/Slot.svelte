@@ -1,7 +1,7 @@
 <script>
     export let width = "18vw";                      // width of Slot div [should]adjust based on text length
     export let t1, t2;                              // start/end time strings [should]pass as datetime object and then render to string
-    export let locations;                           // array of meeting location strings
+    export let locations = [];                    // array of meeting location strings
 
     //[should] remove non-distinct locations
 
@@ -21,7 +21,7 @@
         <h1>{ t1 } -- { t2 }</h1>
 
         <!-- list of available locations (if applicable) -->
-        {#if use_location}
+        {#if use_locations}
         <!-- <div class="hstack gap-3"> -->
         <div class="form-check form-check-inline">
 

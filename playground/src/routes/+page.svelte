@@ -58,8 +58,6 @@
 
                 <input type="text" class="form-control" id="name" placeholder="Name">
             </div>
-        </div>
-    </div>
     
     <!-- <div class="container">
         <div class="row">
@@ -90,7 +88,6 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <br/>
-</div>
 
 <footer class="text-center text-lg-start bg-light text-muted">
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
