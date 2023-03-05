@@ -110,6 +110,7 @@
                     Add
                 </button>
             </form>
+            <br>
     
             <!-- Locations list -->
 
