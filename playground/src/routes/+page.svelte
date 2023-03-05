@@ -87,6 +87,8 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <br/>
+    <h3>Want to make your own event?  <a href="/create" class="btn btn-success" role="button">Create</a></h3>
+
 </div>
 
 <footer class="text-center text-lg-start bg-light text-muted">

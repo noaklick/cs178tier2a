@@ -120,12 +120,13 @@
                         <div class="col">
                             <label for="location-{location.id}" class="todo-label"> {location.name} </label>
                         </div>
-                    <div class="col">
-                        <button type="button" class="btn btn-danger btn-sm" on:click={() => removeLocation(location)}>
-                            Delete
-                        </button>
+                        <div class="col">
+                            <button type="button" class="btn btn-danger btn-sm" on:click={() => removeLocation(location)}>
+                                Delete
+                            </button>
+                        </div>
                     </div>
-                </div>
+                <div class="row"> <div class="col"></div><div class="col"></div></div>
                 {:else}
                     <li>No locations added yet!</li>
                 {/each}
@@ -165,27 +166,32 @@
             <br>
 
             <!-- Timeblocks list -->
-            <ul role="list" class="todo-list stack-large" aria-labelledby="list-heading">
-                {#each timeblocks as timeblock (timeblock.id)}
-                    <li class="todo">
-                        <div class="stack-small">
-                            <div class="c-cb">
-                                <!-- #reactive the curly braces let us use JavaScript in the HTML -->
-                                <!-- #properties accessing the id of the todo -->
-        
-                                <!-- #text-exp dynamically adding the name of the todo -->
-                                <label for="timeblock-{timeblock.id}" class="todo-label"> <b>Start: </b> {timeblock.start.toLocaleString(options)} <b>End: </b>{timeblock.end.toLocaleString(options)}</label>
-                                <button type="button" class="btn btn-danger btn-sm" on:click={() => removeTimeblock(timeblock)}>
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
-                    </li>
+            <div class="container">
+            {#each timeblocks as timeblock (timeblock.id)}
+                <div class="row">
+                    <div class="col">
+                        <label for="timeblock-{timeblock.id}" class="todo-label"> <b>Start: </b> {timeblock.start.toLocaleString(options)} <b>End: </b>{timeblock.end.toLocaleString(options)}</label>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-danger btn-sm" on:click={() => removeTimeblock(timeblock)}>
+                            Delete
+                        </button>
+                    </div>
+                </div>
                 {:else}
                     <li>No time blocks added yet!</li>
                 {/each}
-            </ul>
+            </div>
         </div>
+        <hr>
+
+        <h3>Ready to collect availability?   <a href="/" class="btn btn-success" role="button">User Entry</a></h3>
     </div>
 </div>
+
+<footer class="text-center text-lg-start bg-light text-muted">
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+       A project for CS 178 by Noa Kligfeld and Ricky Williams.
+    </div>
+</footer>
   
