@@ -9,16 +9,16 @@
     const use_locations = (locations.length > 0);
 
     //[should] use a dictionary (location : true/false) rather than numeric array (requires all locations to be distinct)
-    export let selected = {};                       // true/false for each location checkbox
+    export let selected = [];                       // true/false for each location checkbox
     for (let i = 0; i < locations.length; i++) {
-        selected[i] = false;
+        selected.push(false);
     }
 </script>
 
 <div class="card w-50" style={ style }>
     <!-- start/end time -->
     <div class="card-body">
-        <h1>{ t1 } -- { t2 }</h1>
+        <h1>{ t1.getHours() + ":" + t1.getMinutes() } -- { t2.getHours() + ":" + t2.getMinutes() }</h1>
 
         <!-- list of available locations (if applicable) -->
         {#if use_locations}
@@ -28,7 +28,7 @@
             {#each locations as loc, i}
             {@const loc_id = loc + i}
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id={loc_id} />
+                <input type="checkbox" class="form-check-input" id={loc_id} bind:checked={selected[i]} />
                 <label for={loc_id} class="form-check-label">{loc}</label>
             </div>
             {/each}

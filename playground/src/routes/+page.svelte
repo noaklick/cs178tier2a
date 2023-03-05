@@ -2,7 +2,6 @@
     // list the time slots/locations from 'default.json' and process form data
 
     import Slot from '$lib/components/Slot.svelte';
-    import data from '$lib/default.json';
     import TimezonePicker from 'svelte-timezone-picker';
 
     let timezone = 'America/New_York';
@@ -15,15 +14,23 @@
         console.log(event.target);
     }
 
+    /** @type {import('./$types').PageData} */  
+    export let data;
+
+    console.log(data);
+
     // track each input in each Slot
     let slotdata = [];
     data.slots.forEach(s => {
         slotdata.push({
-            t1: s.t1,
-            t2 : s.t2,
+            t1: new Date(s.t1),
+            t2 : new Date(s.t2),
             selected : [],
+            locations : data.locations
         })
     });
+
+    //console.log(slotdata);
 </script>
 
 <style>
@@ -40,8 +47,6 @@
     </div>
         
 </header>
-
-<Slot />
 
 <div class="content">
 
@@ -75,11 +80,11 @@
     <br>
     <form on:submit|preventDefault={handleSubmit}>
         <div class="vstack gap-2">
-        {#each data.slots as s}
+        {#each slotdata as s}
             <Slot   t1={s.t1} 
                     t2={s.t2} 
-                    locations={data.locations}
-                    bind:s />
+                    locations={s.locations}
+                    bind:value={s.selected} />
         {/each}
         </div>
 
