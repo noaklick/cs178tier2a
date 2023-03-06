@@ -34,6 +34,13 @@
         })
     });
 
+    // filter time slots by day of the week
+    let slotsByDay = Array(7).fill([]);
+    $: slotdata.forEach(s => {
+        slotsByDay[s.t1.getDay()].push(s);
+    });
+
+    // turn user\time data into a CSV string and write to a file
     function exportToCSV(arr) {
         let filestring = "";
         for (let i = 0; i < arr.length; i++) {
@@ -54,6 +61,7 @@
 
         exportToCSV(userData);
 
+        // clear input
         name = "";
         slotdata.forEach(s => {
             for (let i = 0; i < s.selected; i++) {
@@ -96,8 +104,13 @@
     
     <br>
     <form on:submit|preventDefault={handleSubmit}>
+        <div class="hstack gap-2">
+            <input type="text" class="form-control" id="name" placeholder="Name" bind:value={name}>
+            <button type="submit" class="btn btn-primary" disabled="{nameIsGiven}">Submit</button>
+        </div>
+
+        <!--
         <div class="vstack gap-2">
-        <input type="text" class="form-control" id="name" placeholder="Name" bind:value={name}>
         {#each slotdata as s}
             <Slot   t1={s.t1} 
                     t2={s.t2} 
@@ -106,9 +119,21 @@
                     bind:selected={s.selected} />
         {/each}
         </div>
+        -->
 
-        <br />
-        <button type="submit" class="btn btn-primary" disabled="{nameIsGiven}">Submit</button>
+        <div class="container">
+            {#each slotsByDay as sarr, i}
+                <div class="vstack gap-2">
+                {#each sarr as s}
+                    <Slot   t1={s.t1} 
+                            t2={s.t2} 
+                            timezone={new_tz}
+                            locations={s.locations}
+                            bind:selected={s.selected} />
+                {/each}
+                </div>
+            {/each}
+        </div>
     </form>
     <br/>
     <h3>Want to make your own event?  <a href="/create" class="btn btn-success" role="button">Create</a></h3>
