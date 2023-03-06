@@ -8,19 +8,20 @@
     let timezone = 'America/New_York';
     $: new_tz = timezone;
 
+    let userTicks = 0;
+
     function update(ev) {
         new_tz = ev.detail.timezone;
         console.log(ev.detail.timezone);
     }
 
-    function handleSubmit(event) {
-        console.log(event.target);
-    }
-
     /** @type {import('./$types').PageData} */  
     export let data;
 
-    console.log(data);
+    let name = "";
+    $: nameIsGiven = !name;
+
+    let userData = [];
 
     // track each input in each Slot
     let slotdata = [];
@@ -33,7 +34,33 @@
         })
     });
 
-    let userTicks = 0;
+    function exportToCSV(arr) {
+        let filestring = "";
+        for (let i = 0; i < arr.length; i++) {
+            filestring += arr[i].name + "," + arr[i].time + "\n";
+        }
+
+        console.log(filestring);
+    }
+
+    function handleSubmit(event) {
+        //console.log("Name = " + name);
+        //console.log("Time = " + userTicks + " seconds");
+
+        userData.push({
+            name : name,
+            time : userTicks
+        });
+
+        exportToCSV(userData);
+
+        name = "";
+        slotdata.forEach(s => {
+            for (let i = 0; i < s.selected; i++) {
+                selected[i] = false;
+            }
+        });
+    }
 </script>
 
 <style>
@@ -52,7 +79,7 @@
 </header>
 
 <div class="content">
-    <Timer bind:value={userTicks} />
+    <Timer bind:ticks={userTicks} />
 
     <div class="container">
         <div class="row justify-content-md-center">
@@ -63,8 +90,6 @@
             <div class="col col-lg-2"></div>
             <!-- <div class="col-lg-auto"> -->
             <div class="col col-lg-4">
-
-                <input type="text" class="form-control" id="name" placeholder="Name">
             </div>
         </div>
     </div>
@@ -72,17 +97,18 @@
     <br>
     <form on:submit|preventDefault={handleSubmit}>
         <div class="vstack gap-2">
+        <input type="text" class="form-control" id="name" placeholder="Name" bind:value={name}>
         {#each slotdata as s}
             <Slot   t1={s.t1} 
                     t2={s.t2} 
                     timezone={new_tz}
                     locations={s.locations}
-                    bind:value={s.selected} />
+                    bind:selected={s.selected} />
         {/each}
         </div>
 
         <br />
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" disabled="{nameIsGiven}">Submit</button>
     </form>
     <br/>
     <h3>Want to make your own event?  <a href="/create" class="btn btn-success" role="button">Create</a></h3>
