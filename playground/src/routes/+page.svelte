@@ -120,14 +120,26 @@
         </div>
         <br>
 
-        <div class="vstack gap-2">
-        {#each slotdata as s}
-            <Slot   t1={s.t1} 
-                    t2={s.t2} 
-                    timezone={new_tz}
-                    locations={s.locations}
-                    bind:selected={s.selected} />
-        {/each}
+        <!-- <div class="hstack gap-2"> -->
+        <!-- <div class="list-group" style="display: grid; grid-template-columns: repeat(3, 20fr);"> -->
+        <!-- <div class="wrapper" style="display: grid, grid-template-columns: 1fr 1fr 1fr;"> -->
+        <div class="container">
+            <div class="row gy-5">
+                {#each slotdata as s}
+                <!-- <div class="list group item"> -->
+                <div class="col">
+                    <Slot   t1={s.t1} 
+                            t2={s.t2} 
+                            timezone={new_tz}
+                            locations={s.locations}
+                            bind:selected={s.selected} />
+                </div>
+                {/each}
+                <br><br>
+                <!-- <hr> -->
+            </div>
+            <!-- <hr> -->
+            <br><br>
         </div>
 
         <!--
