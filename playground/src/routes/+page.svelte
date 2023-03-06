@@ -53,6 +53,8 @@
     function resetUser() {
         name = "";
         userTicks = 0;
+        
+        /*
         for (let i = 0; i < 7; i++) {
             slotsByDay[i].forEach(s => {
                 for (let j = 0; j < s.selected.length; j++) {
@@ -62,6 +64,13 @@
         }
 
         slotsByDay = slotsByDay;
+        */
+
+        for (let i = 0; i < slotdata.length; i++) {
+            for (let j = 0; j < slotdata[i].selected.length; j++) {
+                slotdata[i].selected[j] = false;
+            }
+        }
     }
 
     function handleSubmit(event) {
@@ -118,7 +127,6 @@
             <button type="submit" class="btn btn-primary" disabled="{nameIsGiven}">Submit</button>
         </div>
 
-        <!--
         <div class="vstack gap-2">
         {#each slotdata as s}
             <Slot   t1={s.t1} 
@@ -128,8 +136,8 @@
                     bind:selected={s.selected} />
         {/each}
         </div>
-        -->
 
+        <!--
         <div class="container">
             {#each slotsByDay as sarr, i}
                 <div class="col">
@@ -145,6 +153,7 @@
                 </div>
             {/each}
         </div>
+        -->
     </form>
     <br/>
     <h3>Want to make your own event?  <a href="/create" class="btn btn-success" role="button">Create</a></h3>
