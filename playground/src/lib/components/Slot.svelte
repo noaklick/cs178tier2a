@@ -25,16 +25,14 @@
     }
 </script>
 
-<div class="card w-25" style={ style }>
+<div class="card" style={ style }>
     <!-- start/end time -->
     <div class="card-body">
-        <h4>{ t1.toLocaleString("en-US", {timeZone: timezone, weekday:"short", month: "short", day: "numeric", hour: "numeric", minute: "numeric",})} </h4>
-        <h4>{ t2.toLocaleString("en-US", {timeZone: timezone, weekday:"short", month: "short", day: "numeric", hour: "numeric", minute: "numeric",})} </h4>
+        <h5>{ t1.toLocaleString("en-US", {timeZone: timezone, weekday:"short", month: "short", day: "numeric", hour: "numeric", minute: "numeric",})} </h5>
+        <h5>{ t2.toLocaleString("en-US", {timeZone: timezone, weekday:"short", month: "short", day: "numeric", hour: "numeric", minute: "numeric",})} </h5>
         <!-- list of available locations (if applicable) -->
         {#if use_locations}
-        <!-- <div class="hstack gap-3"> -->
         <div class="form-check form-check-inline">
-
             {#each locations as loc, i}
             {@const loc_id = loc + i}
             <div class="form-check">

@@ -4,10 +4,3 @@ import data from '$lib/default.json';
 export async function load({ params }) {
     return data;
 }
-
-/** @type {import('./$types').Actions} */
-export const actions = {
-    submit : async (event) => {
-
-    }
-};
