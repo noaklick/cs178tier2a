@@ -29,6 +29,7 @@
 
     // user data
     let timer;
+    let timerIsStarted = false;
     let user = {
         name : "",
         timeStart : null,
@@ -39,9 +40,14 @@
 
     let allUserData = [];
 
+    function startTimer() {
+        timer.start();
+        timerIsStarted = true;
+    }
+
     // handler user input (name, schedule selections) submission
     function handleSubmit(event) {
-        user.timeStart = timer.startDatetime;
+        user.timeStart = timer.getStartTime();
         user.timeEnd = Date.now();
         allUserData.push(user);
 
@@ -72,6 +78,7 @@
         user.timeStart = null;
         user.timeEnd = null;
         user.timeTicks = 0;
+        timerIsStarted = false;
 
         // clear schedule selections
         for (let i = 0; i < slotdata.length; i++) {
@@ -102,7 +109,12 @@
     
     <form on:submit|preventDefault={handleSubmit}>
         <div class="row">
-            <!-- timezone selection -->
+            <div class="col-lg-auto">
+                <button type="button" class="btn btn-success" on:click="{startTimer}" disabled={timerIsStarted}>Start</button>
+                <small id="startHelp" class="form-text text-muted">
+                    Click this button to start the timer!
+                </small> 
+            </div>
             <div class="col-lg-auto">
                 <TimezonePicker {timezone} on:update="{update}" />
             </div>

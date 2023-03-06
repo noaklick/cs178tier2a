@@ -10,11 +10,10 @@ export async function POST({ request }) {
 
     fs.writeFileSync('src/lib/user.json', JSON.stringify(userdata), (err) => {
         if (err) { console.log("Error: " + err); }
-        else {
-            console.log("User data added. Current data: ");
-            console.log(userdata.data);
-        }
     });
+
+    console.log("User data added. Current data: ");
+    console.log(userdata.data);
 
     return json('OK');
 }
