@@ -1,27 +1,11 @@
 <script>
-    // list the time slots/locations from 'default.json' and process form data
-
     import Slot from '$lib/components/Slot.svelte';
-    import TimezonePicker from 'svelte-timezone-picker';
     import Timer from '$lib/components/Timer.svelte';
+    import TimezonePicker from 'svelte-timezone-picker';
 
-    let timezone = 'America/New_York';
-    $: new_tz = timezone;
-
-    let userTicks = 0;
-
-    function update(ev) {
-        new_tz = ev.detail.timezone;
-        console.log(ev.detail.timezone);
-    }
-
+    // load default data from server ($lib/default.json)
     /** @type {import('./$types').PageData} */  
     export let data;
-
-    let name = "";
-    $: nameIsGiven = !name;
-
-    let userData = [];
 
     // track each input in each Slot
     let slotdata = [];
@@ -34,58 +18,74 @@
         })
     });
 
-    // filter time slots by day of the week
-    let slotsByDay = Array(7).fill([]);
-    slotdata.forEach(s => {
-        slotsByDay[s.t1.getDay()].push(s);
-    });
+    // reactive timezone + updating
+    let timezone = 'America/New_York';
+    $: new_tz = timezone;
 
-    // turn user\time data into a CSV string and write to a file
-    function exportToCSV(arr) {
-        let filestring = "";
-        for (let i = 0; i < arr.length; i++) {
-            filestring += arr[i].name + "," + arr[i].time + "\n";
-        }
-
-        console.log(filestring);
+    function update(ev) {
+        new_tz = ev.detail.timezone;
+        console.log(ev.detail.timezone);
     }
 
-    function resetUser() {
-        name = "";
-        userTicks = 0;
-        
-        /*
-        for (let i = 0; i < 7; i++) {
-            slotsByDay[i].forEach(s => {
-                for (let j = 0; j < s.selected.length; j++) {
-                    s.selected[j] = false;
-                }
-            });
-        }
+    // user data
+    let timer;
+    let timerIsStarted = false;
+    let user = {
+        name : "",
+        timeStart : null,
+        timeEnd : null,
+        timeTicks : 0,
+    };
+    $: nameIsGiven = !user.name;
 
-        slotsByDay = slotsByDay;
-        */
+    let allUserData = [];
 
+    function startTimer() {
+        timer.start();
+        timerIsStarted = true;
+    }
+
+    // handler user input (name, schedule selections) submission
+    function handleSubmit(event) {
+        user.timeStart = timer.getStartTime();
+        user.timeEnd = Date.now();
+        allUserData.push(user);
+
+        // [DEBUG]
+        console.log(user);
+        console.log("Datetime difference = " + Math.abs(user.timeEnd - user.timeStart) + " ms");
+
+        csvExport();
+        clear();
+    }
+
+    async function csvExport() {
+        const response = await fetch('/', {
+            method : 'POST',
+            body : JSON.stringify(user),
+            header : {
+                'content-type' : 'application/json'
+            }
+        });
+
+        console.log(response);
+    }
+
+    // reset all user input (i.e. after submission)
+    function clear() {
+        // clear user data
+        user.name = "";
+        user.timeStart = null;
+        user.timeEnd = null;
+        user.timeTicks = 0;
+        timerIsStarted = false;
+
+        // clear schedule selections
         for (let i = 0; i < slotdata.length; i++) {
             for (let j = 0; j < slotdata[i].selected.length; j++) {
                 slotdata[i].selected[j] = false;
             }
         }
-    }
-
-    function handleSubmit(event) {
-        //console.log("Name = " + name);
-        //console.log("Time = " + userTicks + " seconds");
-
-        userData.push({
-            name : name,
-            time : userTicks
-        });
-
-        exportToCSV(userData);
-
-        // clear input
-        resetUser();
     }
 </script>
 
@@ -101,16 +101,16 @@
         <h1 class="mb-3">Which meeting could you go to?</h1>
         <h4 class="mb-3">Select all time+location combos that work for you!</h4>
     </div>
-        
 </header>
 
 <div class="content">
-    <Timer bind:ticks={userTicks} />
+    <!-- set up (invisible) timer to track how long each user takes to fill out selections -->
+    <Timer bind:ticks={user.timeTicks} bind:this={timer}/>
+    
     <form on:submit|preventDefault={handleSubmit}>
-        <!-- <div class="row justify-content-md-center"> -->
         <div class="row">
             <div class="col-lg-auto">
-                <button type="button" class="btn btn-success">Start</button>
+                <button type="button" class="btn btn-success" on:click="{startTimer}" disabled={timerIsStarted}>Start</button>
                 <small id="startHelp" class="form-text text-muted">
                     Click this button to start the timer!
                 </small> 
@@ -118,11 +118,13 @@
             <div class="col-lg-auto">
                 <TimezonePicker {timezone} on:update="{update}" />
             </div>
+
+            <!-- name input -->
             <div class="col-lg-auto">
-                <input type="text" class="form-control" id="name" placeholder="Name" bind:value={name}>
+                <input type="text" class="form-control" id="name" placeholder="Name" bind:value={user.name}>
             </div>
         </div>
-        <br>
+        <br />
 
         <!-- <div class="hstack gap-2"> -->
         <!-- <div class="list-group" style="display: grid; grid-template-columns: repeat(3, 20fr);"> -->
@@ -145,32 +147,19 @@
             <!-- <hr> -->
             <br><br>
         </div>
+        <br />
 
-        <!--
-        <div class="container">
-            {#each slotsByDay as sarr, i}
-
-                <div class="col">
-                {#each sarr as s}
-                    <div class="row">
-                        <Slot   t1={s.t1} 
-                                t2={s.t2} 
-                                timezone={new_tz}
-                                locations={s.locations}
-                                bind:selected={s.selected} />
-                    </div>
-                {/each}
-                </div>
-            {/each}
-        </div>
-        -->
+        <!-- form submission -->
+        <button type="submit" class="btn btn-primary" disabled="{nameIsGiven}">Submit</button>
+        <small id="submitHelp" class="form-text text-muted">
+            You must enter your name before you submit. 
+        </small>
     </form>
-    <br>
-    <button type="submit" class="btn btn-primary" disabled="{nameIsGiven}">Submit</button>
-    <small id="submitHelp" class="form-text text-muted">
-        You must enter your name before you submit. 
-    </small>
-    <br><br>
+
+    <br />
+    <br />
+
+    <!-- link to 'create' page -->
     <h3>Want to make your own event?  <a href="/create" class="btn btn-success" role="button">Create</a></h3>
 
 </div>
