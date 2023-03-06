@@ -1,8 +1,8 @@
 <script>
-    export let width = "18vw";                      // width of Slot div [should]adjust based on text length
-    export let t1, t2;                              // start/end time strings [should]pass as datetime object and then render to string
+    export let width = "18vw";                  // width of Slot div [should]adjust based on text length
+    export let t1, t2;                          // start/end time strings [should]pass as datetime object and then render to string
     export let timezone = "America/New_York"
-    export let locations = [];                    // array of meeting location strings
+    export let locations = [];                  // array of meeting location strings
 
     const options = {
         weekday: "short",
@@ -11,7 +11,6 @@
         year: "long",
         // timeZone: timezone
     };
-
 
     //[should] remove non-distinct locations
 
@@ -30,6 +29,7 @@
     <div class="card-body">
         <h5>{ t1.toLocaleString("en-US", {timeZone: timezone, weekday:"short", month: "short", day: "numeric", hour: "numeric", minute: "numeric",})} </h5>
         <h5>{ t2.toLocaleString("en-US", {timeZone: timezone, weekday:"short", month: "short", day: "numeric", hour: "numeric", minute: "numeric",})} </h5>
+        
         <!-- list of available locations (if applicable) -->
         {#if use_locations}
         <div class="form-check form-check-inline">

@@ -7,7 +7,7 @@
     /** @type {import('./$types').PageData} */  
     export let data;
 
-    // track each input in each Slot
+    // track user input for each Slot individually
     let slotdata = [];
     data.slots.forEach(s => {
         slotdata.push({
@@ -27,9 +27,15 @@
         console.log(ev.detail.timezone);
     }
 
-    // user data
+    // page timer + user data initialization
     let timer;
     let timerIsStarted = false;
+    function startTimer() {
+        timer.start();
+        timerIsStarted = true;
+    }
+
+    let allUserData = [];
     let user = {
         name : "",
         timeStart : null,
@@ -37,13 +43,6 @@
         timeTicks : 0,
     };
     $: nameIsGiven = !user.name;
-
-    let allUserData = [];
-
-    function startTimer() {
-        timer.start();
-        timerIsStarted = true;
-    }
 
     // handler user input (name, schedule selections) submission
     function handleSubmit(event) {
@@ -55,11 +54,12 @@
         console.log(user);
         console.log("Datetime difference = " + Math.abs(user.timeEnd - user.timeStart) + " ms");
 
-        csvExport();
+        userdataExport();
         clear();
     }
 
-    async function csvExport() {
+    // save user data to a server-side file
+    async function userdataExport() {
         const response = await fetch('/', {
             method : 'POST',
             body : JSON.stringify(user),
@@ -68,6 +68,7 @@
             }
         });
 
+        // [DEBUG]
         console.log(response);
     }
 
@@ -109,6 +110,7 @@
     
     <form on:submit|preventDefault={handleSubmit}>
         <div class="row">
+            <!-- button to start the page timer (resets upon user submission) -->
             <div class="col-lg-auto">
                 <button type="button" class="btn btn-success" on:click="{startTimer}" disabled={timerIsStarted}>Start</button>
                 <small id="startHelp" class="form-text text-muted">
@@ -126,13 +128,10 @@
         </div>
         <br />
 
-        <!-- <div class="hstack gap-2"> -->
-        <!-- <div class="list-group" style="display: grid; grid-template-columns: repeat(3, 20fr);"> -->
-        <!-- <div class="wrapper" style="display: grid, grid-template-columns: 1fr 1fr 1fr;"> -->
+        <!-- iterate over and list all possible timeslots w/ locations -->
         <div class="container">
             <div class="row gy-5">
                 {#each slotdata as s}
-                <!-- <div class="list group item"> -->
                 <div class="col">
                     <Slot   t1={s.t1} 
                             t2={s.t2} 
@@ -142,9 +141,7 @@
                 </div>
                 {/each}
                 <br><br>
-                <!-- <hr> -->
             </div>
-            <!-- <hr> -->
             <br><br>
         </div>
         <br />

@@ -1,13 +1,9 @@
 {
-	"name": "playground",
+	"name": "cs178tier2a",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
-		"test": "playwright test",
-		"lint": "eslint ."
+		"dev": "vite dev"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
