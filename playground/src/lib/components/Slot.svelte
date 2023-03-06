@@ -1,6 +1,7 @@
 <script>
     export let width = "18vw";                      // width of Slot div [should]adjust based on text length
     export let t1, t2;                              // start/end time strings [should]pass as datetime object and then render to string
+    export let timezone = "America/New_York"
     export let locations = [];                    // array of meeting location strings
 
     //[should] remove non-distinct locations
@@ -23,8 +24,8 @@
 <div class="card w-50" style={ style }>
     <!-- start/end time -->
     <div class="card-body">
-        <h1>{ t1.toLocaleString("en-US", {timeZone: "Australia/Brisbane"})}</h1>
-        <h1>{ t2.toLocaleString("en-US", {timeZone: "Australia/Brisbane"})}</h1>
+        <h1>{ t1.toLocaleString("en-US", {timeZone: timezone})}</h1>
+        <h1>{ t2.toLocaleString("en-US", {timeZone: timezone})}</h1>
 
         <!-- list of available locations (if applicable) -->
         {#if use_locations}

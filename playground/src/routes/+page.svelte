@@ -5,8 +5,10 @@
     import TimezonePicker from 'svelte-timezone-picker';
 
     let timezone = 'America/New_York';
+    $: new_tz = timezone;
 
     function update(ev) {
+        new_tz = ev.detail.timezone;
         console.log(ev.detail.timezone);
     }
 
@@ -29,8 +31,6 @@
             locations : data.locations
         })
     });
-
-    //console.log(slotdata);
 </script>
 
 <style>
@@ -62,18 +62,6 @@
 
                 <input type="text" class="form-control" id="name" placeholder="Name">
             </div>
-    
-    <!-- <div class="container">
-        <div class="row">
-            <div class="col">
-                <TimezonePicker {timezone} on:update="{update}" />
-            </div>
-            <div class="col">
-                <input type="text" class="form-control" id="name" placeholder="Name">
-            </div>
-            <div class="col"></div>            
-                <div class="col"></div>
-        -->
         </div>
     </div>
     
@@ -83,6 +71,7 @@
         {#each slotdata as s}
             <Slot   t1={s.t1} 
                     t2={s.t2} 
+                    timezone={new_tz}
                     locations={s.locations}
                     bind:value={s.selected} />
         {/each}
