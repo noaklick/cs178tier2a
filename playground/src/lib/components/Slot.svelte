@@ -4,15 +4,19 @@
     export let timezone = "America/New_York"
     export let locations = [];                    // array of meeting location strings
 
+    const options = {
+        weekday: "short",
+        month: "long",
+        day: "numeric",
+        year: "long",
+        // timeZone: timezone
+    };
+
+
     //[should] remove non-distinct locations
 
     const style = `width: ${width}`;
     const use_locations = (locations.length > 0);
-
-    // source: https://stackoverflow.com/questions/10087819/convert-date-to-another-timezone-in-javascript
-    function convertTZ(date, tzString) {
-        return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}));   
-    }
 
     //[should] use a dictionary (location : true/false) rather than numeric array (requires all locations to be distinct)
     export let selected = [];                       // true/false for each location checkbox
@@ -24,9 +28,8 @@
 <div class="card w-50" style={ style }>
     <!-- start/end time -->
     <div class="card-body">
-        <h1>{ t1.toLocaleString("en-US", {timeZone: timezone})}</h1>
-        <h1>{ t2.toLocaleString("en-US", {timeZone: timezone})}</h1>
-
+        <h2>{ t1.toLocaleString("en-US", {timeZone: timezone, weekday:"short", month: "long", day: "numeric", hour: "numeric", minute: "numeric",})} </h2>
+        <h2>{ t2.toLocaleString("en-US", {timeZone: timezone, weekday:"short", month: "long", day: "numeric", hour: "numeric", minute: "numeric",})} </h2>
         <!-- list of available locations (if applicable) -->
         {#if use_locations}
         <!-- <div class="hstack gap-3"> -->
