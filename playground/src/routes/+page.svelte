@@ -3,6 +3,7 @@
 
     import Slot from '$lib/components/Slot.svelte';
     import TimezonePicker from 'svelte-timezone-picker';
+    import Timer from '$lib/components/Timer.svelte';
 
     let timezone = 'America/New_York';
 
@@ -30,7 +31,7 @@
         })
     });
 
-    //console.log(slotdata);
+    let userTicks = 0;
 </script>
 
 <style>
@@ -49,6 +50,7 @@
 </header>
 
 <div class="content">
+    <Timer bind:value={userTicks} />
 
     <div class="container">
         <div class="row justify-content-md-center">
