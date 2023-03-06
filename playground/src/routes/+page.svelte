@@ -106,16 +106,20 @@
 
 <div class="content">
     <Timer bind:ticks={userTicks} />
-    
-    <br>
     <form on:submit|preventDefault={handleSubmit}>
         <!-- <div class="row justify-content-md-center"> -->
         <div class="row">
             <div class="col-lg-auto">
-                <TimezonePicker {timezone} on:update="{update}" />
+                <button type="button" class="btn btn-success">Start</button>
+                <small id="startHelp" class="form-text text-muted">
+                    Click this button to start the timer!
+                </small> 
             </div>
             <div class="col-lg-auto">
                 <input type="text" class="form-control" id="name" placeholder="Name" bind:value={name}>
+            </div>
+            <div class="col-lg-auto">
+                <TimezonePicker {timezone} on:update="{update}" />
             </div>
         </div>
         <br>
