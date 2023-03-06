@@ -25,11 +25,11 @@
     }
 </script>
 
-<div class="card w-50" style={ style }>
+<div class="card w-25" style={ style }>
     <!-- start/end time -->
     <div class="card-body">
-        <h2>{ t1.toLocaleString("en-US", {timeZone: timezone, weekday:"short", month: "long", day: "numeric", hour: "numeric", minute: "numeric",})} </h2>
-        <h2>{ t2.toLocaleString("en-US", {timeZone: timezone, weekday:"short", month: "long", day: "numeric", hour: "numeric", minute: "numeric",})} </h2>
+        <h4>{ t1.toLocaleString("en-US", {timeZone: timezone, weekday:"short", month: "short", day: "numeric", hour: "numeric", minute: "numeric",})} </h4>
+        <h4>{ t2.toLocaleString("en-US", {timeZone: timezone, weekday:"short", month: "short", day: "numeric", hour: "numeric", minute: "numeric",})} </h4>
         <!-- list of available locations (if applicable) -->
         {#if use_locations}
         <!-- <div class="hstack gap-3"> -->
