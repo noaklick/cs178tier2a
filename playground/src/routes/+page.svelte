@@ -36,7 +36,7 @@
 
     // filter time slots by day of the week
     let slotsByDay = Array(7).fill([]);
-    $: slotdata.forEach(s => {
+    /*$:*/ slotdata.forEach(s => {
         slotsByDay[s.t1.getDay()].push(s);
     });
 
