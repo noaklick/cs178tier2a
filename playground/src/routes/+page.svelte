@@ -36,7 +36,7 @@
 
     // filter time slots by day of the week
     let slotsByDay = Array(7).fill([]);
-    /*$:*/ slotdata.forEach(s => {
+    slotdata.forEach(s => {
         slotsByDay[s.t1.getDay()].push(s);
     });
 
@@ -48,6 +48,20 @@
         }
 
         console.log(filestring);
+    }
+
+    function resetUser() {
+        name = "";
+        userTicks = 0;
+        for (let i = 0; i < 7; i++) {
+            slotsByDay[i].forEach(s => {
+                for (let j = 0; j < s.selected.length; j++) {
+                    s.selected[j] = false;
+                }
+            });
+        }
+
+        slotsByDay = slotsByDay;
     }
 
     function handleSubmit(event) {
@@ -62,12 +76,7 @@
         exportToCSV(userData);
 
         // clear input
-        name = "";
-        slotdata.forEach(s => {
-            for (let i = 0; i < s.selected; i++) {
-                selected[i] = false;
-            }
-        });
+        resetUser();
     }
 </script>
 
@@ -123,13 +132,15 @@
 
         <div class="container">
             {#each slotsByDay as sarr, i}
-                <div class="vstack gap-2">
+                <div class="col">
                 {#each sarr as s}
-                    <Slot   t1={s.t1} 
-                            t2={s.t2} 
-                            timezone={new_tz}
-                            locations={s.locations}
-                            bind:selected={s.selected} />
+                    <div class="row">
+                        <Slot   t1={s.t1} 
+                                t2={s.t2} 
+                                timezone={new_tz}
+                                locations={s.locations}
+                                bind:selected={s.selected} />
+                    </div>
                 {/each}
                 </div>
             {/each}
