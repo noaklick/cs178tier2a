@@ -116,10 +116,10 @@
                 </small> 
             </div>
             <div class="col-lg-auto">
-                <input type="text" class="form-control" id="name" placeholder="Name" bind:value={name}>
+                <TimezonePicker {timezone} on:update="{update}" />
             </div>
             <div class="col-lg-auto">
-                <TimezonePicker {timezone} on:update="{update}" />
+                <input type="text" class="form-control" id="name" placeholder="Name" bind:value={name}>
             </div>
         </div>
         <br>
