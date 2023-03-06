@@ -106,26 +106,19 @@
 
 <div class="content">
     <Timer bind:ticks={userTicks} />
-
-    <div class="container">
-        <div class="row justify-content-md-center">
-            <div class="col-lg-auto">
-
-                <TimezonePicker {timezone} on:update="{update}" />
-            </div>
-            <div class="col col-lg-2"></div>
-            <!-- <div class="col-lg-auto"> -->
-            <div class="col col-lg-4">
-            </div>
-        </div>
-    </div>
     
     <br>
     <form on:submit|preventDefault={handleSubmit}>
-        <div class="hstack gap-2">
-            <input type="text" class="form-control" id="name" placeholder="Name" bind:value={name}>
-            <button type="submit" class="btn btn-primary" disabled="{nameIsGiven}">Submit</button>
+        <!-- <div class="row justify-content-md-center"> -->
+        <div class="row">
+            <div class="col-lg-auto">
+                <TimezonePicker {timezone} on:update="{update}" />
+            </div>
+            <div class="col-lg-auto">
+                <input type="text" class="form-control" id="name" placeholder="Name" bind:value={name}>
+            </div>
         </div>
+        <br>
 
         <div class="vstack gap-2">
         {#each slotdata as s}
@@ -140,6 +133,7 @@
         <!--
         <div class="container">
             {#each slotsByDay as sarr, i}
+
                 <div class="col">
                 {#each sarr as s}
                     <div class="row">
@@ -155,7 +149,12 @@
         </div>
         -->
     </form>
-    <br/>
+    <br>
+    <button type="submit" class="btn btn-primary" disabled="{nameIsGiven}">Submit</button>
+    <small id="submitHelp" class="form-text text-muted">
+        You must enter your name before you submit. 
+    </small>
+    <br><br>
     <h3>Want to make your own event?  <a href="/create" class="btn btn-success" role="button">Create</a></h3>
 
 </div>
