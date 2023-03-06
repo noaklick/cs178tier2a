@@ -9,10 +9,12 @@
      * @type {Date}
      */
     let start = new Date();
+    $: new_start = start;
     /**
      * @type {Date}
      */
     let end = new Date();
+    $: new_end = end;
 
     export let locations = [{id: 1, name: "the gym"}, {id: 2, name: "house"}]
     export let timeblocks = [{id: 1, start: new Date("March 12, 2023 11:00:00"), end: new Date ("March 12, 2023 12:00:00")}]
@@ -39,6 +41,12 @@
         timeblocks = timeblocks.filter((t) => t.id !== timeblock.id)
     }
 
+    function update(ev) {
+        new_start = ev.detail.start;
+        new_end = ev.detail.end;
+        console.log(ev.detail.start);
+        console.log(ev.detail.start)
+    }
     
 
     function addLocation() {
@@ -148,7 +156,7 @@
                 <div class="container">
                     <div class="row justify-content-md-center">
                         <div class="col col-lg-4">
-                            <SveltyPicker inputClasses="form-control" format="yyyy-mm-dd hh:ii" placeholder='Select a start date and time' autoclose></SveltyPicker>   
+                            <SveltyPicker bind:value={start} inputClasses="form-control" startDate=Date.now().toLocaleString format="yyyy-mm-dd hh:ii" placeholder='Select a start date and time' autoclose></SveltyPicker>   
                         </div>
                         <!-- <div class="col-lg-auto"> -->
                         <div class="col col-lg-4">
