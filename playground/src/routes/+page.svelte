@@ -100,6 +100,7 @@
     <div class="p-5 text-center bg-info text-white">
         <h1 class="mb-3">Which meeting could you go to?</h1>
         <h4 class="mb-3">Select all time+location combos that work for you!</h4>
+        <h5 class="mb-3">Please hit the start button to begin.</h5>
     </div>
 </header>
 
