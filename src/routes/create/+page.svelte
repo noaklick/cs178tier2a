@@ -17,13 +17,13 @@
     export let locations = [{id: 1, name: "the gym"}, {id: 2, name: "house"}]
     export let timeblocks = [{id: 1, start: new Date("March 12, 2023 11:00:00"), end: new Date ("March 12, 2023 12:00:00")}]
     let newLocationName = ''
-    // #reactive: these variables will update whenever the todos array changes
-    // #statevariable: keeps track of the number of total todos
+
+    // [concept] "Reactive"; these variables will update whenever the todos array changes
+    // [concept] "State Variable"; keeps track of the number of total todos
     $: totalLocations = locations.length
     $: totalTimeblocks = timeblocks.length
 
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
 
     /**
      * @param {{ id: any; }} location
@@ -39,11 +39,8 @@
         timeblocks = timeblocks.filter((t) => t.id !== timeblock.id)
     }
 
-    
-
     function addLocation() {
-        // #reactive
-        // written this way because reactivity is only triggered upon assignment
+        // [concept] "Reactive"; written this way because reactivity is only triggered upon assignment
         locations = [...locations, { id: newLocationID, name: newLocationName}]
         newLocationName = ''
     }
@@ -53,8 +50,8 @@
         newLocationName = ''
     }
 
-    // #reactive: generating a new id for each todo as needed
-    // #statevariable: keeps track of the number of todos we have so we can make fresh ids
+    // [concept] "Reactive"; generating a new id for each todo as needed
+    // [concept] "State Variable"; keeps track of the number of todos we have so we can make fresh ids
     /**
      * @type {number}
      */
@@ -78,15 +75,12 @@
         newTimeblockID = Math.max(...timeblocks.map((t) => t.id)) + 1;
         }
     }
-
-    
 </script>
   
 <header>
     <div class="p-5 text-center bg-info text-white">
         <h1 class="mb-3">Create a meeting!</h1>
     </div>
-        
 </header>
 
 <div class="content">
@@ -101,11 +95,11 @@
                 <h5 class="label-wrapper">
                     <label for="todo-0" class="label__lg"> Add all locations in which you're available.  </label>
                 </h5>
-                <!-- #properties we bind the the value of the variable to the value of the input -->
+                <!-- [concept] "Props" we bind the the value of the variable to the value of the input -->
                 <!-- noa note: this is super super cool. never seen a feature like this before -->
-                <!-- #text-exp: dynamically updating the value -->
+                <!-- [concept] "Text-exp"; dynamically updating the value -->
                 <input bind:value={newLocationName} type="text" id="todo-0" autocomplete="off" class="input input__lg" placeholder="Location"/>
-                <!-- #button button to add a new todo -->
+                <!-- [concept] "Button"; button to add a new todo -->
                 <button type="submit" class="btn btn-primary">
                     Add
                 </button>
@@ -113,20 +107,18 @@
             <br>
     
             <!-- Locations list -->
-
-                <div class="container">
-                {#each locations as location (location.id)}
-
-                    <div class="row">
-                        <div class="col">
-                            <label for="location-{location.id}" class="todo-label"> {location.name} </label>
-                        </div>
-                        <div class="col">
-                            <button type="button" class="btn btn-danger btn-sm" on:click={() => removeLocation(location)}>
-                                Delete
-                            </button>
-                        </div>
+            <div class="container">
+            {#each locations as location (location.id)}
+                <div class="row">
+                    <div class="col">
+                        <label for="location-{location.id}" class="todo-label"> {location.name} </label>
                     </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-danger btn-sm" on:click={() => removeLocation(location)}>
+                            Delete
+                        </button>
+                    </div>
+                </div>
                 <div class="row"> <div class="col"></div><div class="col"></div></div>
                 {:else}
                     <li>No locations added yet!</li>
@@ -135,7 +127,7 @@
         </div>
         <hr />
 
-        <!-- Timeblocks -->
+        <!-- Timeblocks/Slots -->
         <div class="container">
             <!-- Add a Timeblock -->
             <form on:submit|preventDefault={addTimeblock}>

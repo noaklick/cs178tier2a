@@ -20,6 +20,8 @@ A project for CS 178 by Noa Kligfeld and Ricky Williams.
 `src/app.html`
 - HTML template used for `+page.js` files within routes
 
+The application is started within the root directory via `npm run dev`.
+
 ## Concepts
 
 Concepts are labeled with comments beginning with a "[concept]" tag. Labels are derived from [here](https://docs.google.com/document/d/1XWjbLcNVWrCXJeHqA7wGDx6GrihsSX3aT5lTBVJ1TbY/edit#).

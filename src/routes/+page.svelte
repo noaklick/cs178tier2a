@@ -1,10 +1,3 @@
-<!--
-    concepts are labeled with comments beginning with a "[concept]" tag
-    labels are derived from https://docs.google.com/document/d/1XWjbLcNVWrCXJeHqA7wGDx6GrihsSX3aT5lTBVJ1TbY/edit# 
-
-    'src/lib/components' contains the other critical code files with labeled concepts
--->
-
 <script>
     import Slot from '$lib/components/Slot.svelte';
     import Timer from '$lib/components/Timer.svelte';
