@@ -1,3 +1,10 @@
+<!--
+    concepts are labeled with comments beginning with a "[concept]" tag
+    labels are derived from https://docs.google.com/document/d/1XWjbLcNVWrCXJeHqA7wGDx6GrihsSX3aT5lTBVJ1TbY/edit# 
+
+    'src/lib/components' contains the other critical code files with labeled concepts
+-->
+
 <script>
     import Slot from '$lib/components/Slot.svelte';
     import Timer from '$lib/components/Timer.svelte';
@@ -19,6 +26,7 @@
     });
 
     // reactive timezone + updating
+    // [concept] "Dependent Variables"
     let timezone = 'America/New_York';
     $: new_tz = timezone;
 
@@ -35,6 +43,7 @@
         timerIsStarted = true;
     }
 
+    // array of user data objects
     let allUserData = [];
     let user = {
         name : "",
@@ -42,7 +51,8 @@
         timeEnd : null,
         timeTicks : 0,
     };
-    $: nameIsGiven = !user.name;
+    // [concept] "Dependent Variables"
+    $: nameIsGiven = !user.name;        // automatically update whether name input has been given
 
     // handler user input (name, schedule selections) submission
     function handleSubmit(event) {
@@ -51,6 +61,7 @@
         allUserData.push(user);
 
         // [DEBUG]
+        // [concept] "Printing"
         console.log(user);
         console.log("Datetime difference = " + Math.abs(user.timeEnd - user.timeStart) + " ms");
 
@@ -59,6 +70,7 @@
     }
 
     // save user data to a server-side file
+    // [concept] "Asynshronous Programming"
     async function userdataExport() {
         const response = await fetch('/', {
             method : 'POST',
@@ -69,7 +81,7 @@
         });
 
         // [DEBUG]
-        console.log(response);
+        //console.log(response);
     }
 
     // reset all user input (i.e. after submission)
@@ -112,6 +124,7 @@
         <div class="row">
             <!-- button to start the page timer (resets upon user submission) -->
             <div class="col-lg-auto">
+                <!-- note that the button is unclickable after being initially clicked (user cannot reset timer) -->
                 <button type="button" class="btn btn-success" on:click="{startTimer}" disabled={timerIsStarted}>Start</button>
                 <small id="startHelp" class="form-text text-muted">
                     Click this button to start the timer!
@@ -123,6 +136,8 @@
 
             <!-- name input -->
             <div class="col-lg-auto">
+                <!-- update user data object dynamically with user input -->
+                <!-- [concept] "Binding" -->
                 <input type="text" class="form-control" id="name" placeholder="Name" bind:value={user.name}>
             </div>
         </div>
@@ -131,8 +146,14 @@
         <!-- iterate over and list all possible timeslots w/ locations -->
         <div class="container">
             <div class="row gy-5">
+                <!-- [concept] "Template syntax" -->
                 {#each slotdata as s}
                 <div class="col">
+                    <!-- 
+                        note that the 'selected' prop is passed containing only false values; the passed prop is bound
+                        to its parent component via the 'bind:{variable}' syntax so that user interaction with the Slot
+                        child omponent can update data in the parent component 
+                    -->
                     <Slot   t1={s.t1} 
                             t2={s.t2} 
                             timezone={new_tz}

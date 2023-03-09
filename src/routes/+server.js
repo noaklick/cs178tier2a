@@ -4,6 +4,8 @@ import * as fs from 'fs';
 
 // save user data into a server-side file
 
+// [concept] "Asynchronous Prograamming"
+
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request }) {
     const user = await request.json();
