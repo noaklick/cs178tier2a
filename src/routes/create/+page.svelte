@@ -5,6 +5,7 @@
      * @type {any[]}
      */
     import SveltyPicker from 'svelty-picker'
+    // time picker from https://github.com/mskocik/svelty-pickers 
     /**
      * @type {Date}
      */
@@ -14,6 +15,8 @@
      */
     let end = new Date();
 
+
+    // default data to start the page for demo purposes
     export let locations = [{id: 1, name: "the gym"}, {id: 2, name: "house"}]
     export let timeblocks = [{id: 1, start: new Date("March 12, 2023 11:00:00"), end: new Date ("March 12, 2023 12:00:00")}]
     let newLocationName = ''
@@ -102,7 +105,6 @@
                     <label for="todo-0" class="label__lg"> Add all locations in which you're available.  </label>
                 </h5>
                 <!-- #properties we bind the the value of the variable to the value of the input -->
-                <!-- noa note: this is super super cool. never seen a feature like this before -->
                 <!-- #text-exp: dynamically updating the value -->
                 <input bind:value={newLocationName} type="text" id="todo-0" autocomplete="off" class="input input__lg" placeholder="Location"/>
                 <!-- #button button to add a new todo -->
@@ -186,6 +188,7 @@
         </div>
         <hr>
 
+        <!-- link to user entry -->
         <h3>Ready to collect availability?   <a href="/" class="btn btn-success" role="button">User Entry</a></h3>
     </div>
 </div>
